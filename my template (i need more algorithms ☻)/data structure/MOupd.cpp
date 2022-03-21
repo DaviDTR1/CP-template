@@ -1,17 +1,20 @@
-/*distint number in an interval n * sqrt(n)*/
-
+/*distint number in an interval with updates */ 
 ll leng,t;
 struct trio{
-	ll l,r,id;
+	ll l,r,id,time;
+};
+struct  par{
+    ll id,val;
 };
 ll ar[100005];
 ll cnt[1000005];
 trio que[200005];
-
+par updates[200005];
 ///sort query
 bool cmp(trio &a,trio &b){
     if(a.l/leng!=b.l/leng)return a.l<b.l;
-    return a.r < b.r;
+    if(a.r/leng!=b.r/leng)return a.r<b.r;
+    return a.time < b.time;
 }
 
 ll res;
@@ -29,31 +32,49 @@ void add(ll u){
 	    res++;
 	}
 }
+///update elements
+void up(ll u,ll l, ll r){
+    ll pos = updates[u].id;
+    if(l <= pos && pos <= r){
+        cnt[ar[pos]]--;
+        cnt[updates[u].val]++;
+    }
+    swap(ar[pos],updates[u].val);
+}
 
 void buildMO(){
-    leng = sqrt(n);
+    leng = cbrt(2*n*n);
     sort(que+1,que+t+1,cmp);
     vi sol(t+1);
-    ll l=1,r=0;
+    ll l=1,r=0,c_t = 0;
     fr(i,1,t){
-        x = que[i].l;
-        y = que[i].r;
+        ll x = que[i].l;
+        ll y = que[i].r;
+        ll z = que[i].time;
+        while(c_t < z){
+            c_t++;
+            up(c_t,l,r);
+        }
+        while(c_t > z){
+            up(c_t,l,r);
+            c_t--;
+        }
         while(l<x){
-            moupd.rem(l);
+            rem(l);
             l++;
         }
         while(l>x){
             l--;
-            moupd.add(l);
+            add(l);
         }
         while(r<y){
             r++;
-            moupd.add(r);
+            add(r);
         }
         while(r>y){
-            moupd.rem(r);
+            rem(r);
             r--;
         }
-        sol[que[i].id] = moupd.res;
+        sol[que[i].id] = res;
     }
 }
