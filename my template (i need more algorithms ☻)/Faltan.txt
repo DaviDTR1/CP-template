@@ -2,27 +2,19 @@ String
 	KMP
 	Z_AND_PREFIX_FUNCTION
 	Aho Corasik
-	Trie	
 
 Geometry
 	Convex Hull
 
 Data Structure
 	ABI
-	Persistent ST
 	Heavy-Ligth Decomposition
 
 DP Optimization
-	D&C
 	Knuth
 	Convex Hull trick
 
 Graph
 	Tarjan
-	Flow -> falta MPM
-
-Others
-	Sqrt Decomposition ->agregarle mas cosas
-	Mo's Algorithm
 
 
