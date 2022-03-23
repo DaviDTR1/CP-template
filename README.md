@@ -31,33 +31,49 @@ Codes for ICPC
         
         -Divide & Conquer
         
-   Graph Theory
+   Dinamic Programming on Tree
    
-        -Kruskal
-        
-        -Longest Commun Ancestor
-        
-        -Prim
-        
-        -Kosajaru
-   
-        -2-Sat
-        
-        -Bellman Ford
-        
         -Centroid Decomposition
         
-        -DSU on Tree
         
-        -Flow DINIC
+   Graph Theory
+     
+        MST
+      
+            -Kruskal
+          
+            -Prim
+            
+        Flow and Matching
         
-        -Flow Edmonds Karp
+            -Flow DINIC
+
+            -Flow Edmonds Karp
+
+            -Max Matching
+
+            -Max Matching H
+
+            -Min cost Max Flow
+          
+         Tree
+         
+            -DSU on Tree
         
-        -Max Matching
+            -Longest Commun Ancestor
+         
+         Connected Component
         
-        -Max Matching H
+            -Kosajaru
+   
+         Shortest Paths
+         
+            -Bellman Ford / SPFA
         
-        -Min cost Max Flow
+         Miscellaneous
+        
+            -2-Sat
+  
         
    String
    
@@ -69,5 +85,6 @@ Codes for ICPC
         
         -Trie
    
+        -KMP
    
    
