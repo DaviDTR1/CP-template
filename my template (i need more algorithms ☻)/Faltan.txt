@@ -1,0 +1,25 @@
+String
+	KMP
+	Z_AND_PREFIX_FUNCTION
+	Aho Corasik
+
+Geometry
+	Convex Hull
+
+Data Structure
+	ABI
+	Heavy-Ligth Decomposition
+	DSU
+
+DP Optimization
+	Knuth
+	Convex Hull trick
+
+Graph
+	Tarjan
+
+Others
+	Sqrt Decomposition ->agregarle mas cosas
+	Mo's Algorithm
+
+
