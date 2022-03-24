@@ -25,7 +25,7 @@ void build(ll root){
 	}
 }
 
-find_lca(ll x, ll y){
+ll find_lca(ll x, ll y){
 	if(lv[x] < lv[y])swap(x,y);
 	ll z = 31-__builtin_clz(lv[x]);
 	for(ll i = z; i>=0;i--){
