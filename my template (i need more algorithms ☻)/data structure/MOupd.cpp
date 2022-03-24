@@ -48,9 +48,9 @@ void buildMO(){
     vi sol(t+1);
     ll l=1,r=0,c_t = 0;
     fr(i,1,t){
-        x = que[i].l;
-        y = que[i].r;
-        z = que[i].time;
+        ll x = que[i].l;
+        ll y = que[i].r;
+        ll z = que[i].time;
         while(c_t < z){
             c_t++;
             up(c_t,l,r);
