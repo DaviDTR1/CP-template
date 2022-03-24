@@ -1,13 +1,13 @@
 ///KMP
 vi pref;
+vi solid;
 
-ll kmp(string t,string s){
-    string a,b;
-    a = s + "#" + t;
+ll kmp(string s,string t){
+    string a;
+    a = s + '#' + t;
     ll ta = a.size();
     vi cnt(ta);
-    pref.resize(s.size());
-    ll solt = s.size();
+    pref.resize(s.size()+1);
     cnt[0]=0;
     ///cnt[i] store the largest prefix that is suffix in i
     fr(i,1,ta-1){
@@ -19,17 +19,22 @@ ll kmp(string t,string s){
         cnt[i] = j;
     }
     ///count the number of ocurrence of each prefix of S in T
-    pref[0] = 1;
     fr(i,s.size()+1,ta-1){
-        if(cnt[i]!=0)
-            pref[cnt[i]-1]++;
+        pref[cnt[i]]++;
     }
     for(ll i=s.size()-1; i > 0;i--)
-        if(cnt[i-1]!=0)
-            pref[cnt[i-1]-1] += pref[i];
+            pref[cnt[i-1]] += pref[i];
+    fr(i,1,s.size()-1)pref[i]++;
+    ///length of preffix of S that are suffix in T
+    ta = s.size(); 
+    solid.pb(ta);
+    ta--;
+    while(cnt[ta]){
+        solid.pb(cnt[ta]);
+        ta = cnt[ta]-1;
+    }
     //Find less compressed string of S
     ll lessc = s.size()-cnt[s.size()-1];
     if((s.size())%lessc!=0)lessc = s.size();
 
-    return pref[solt];
 }
