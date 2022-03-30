@@ -86,5 +86,9 @@ Codes for ICPC
         -Trie
    
         -KMP
+        
+   Game Theory
+      
+      -Sprague Grundy Number
    
    
