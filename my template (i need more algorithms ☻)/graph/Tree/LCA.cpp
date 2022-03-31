@@ -3,7 +3,7 @@ ll lv[100005];
 vi g[100005];
 ll lca[100005][25];
 
-void build(ll root){
+void buildLCA(ll root){
 	queue<par> qp;
 	qp.push({root,root});
 	while(!qp.empty()){
