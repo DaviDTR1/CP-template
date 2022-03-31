@@ -36,8 +36,8 @@ void buildMO(){
     vi sol(t+1);
     ll l=1,r=0;
     fr(i,1,t){
-        x = que[i].l;
-        y = que[i].r;
+        ll x = que[i].l;
+        ll y = que[i].r;
         while(l<x){
             rem(l);
             l++;
