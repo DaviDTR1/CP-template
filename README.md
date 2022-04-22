@@ -55,6 +55,8 @@ Codes for ICPC
             -Max Matching H
 
             -Min cost Max Flow
+            
+            -MinAssignment
           
          Tree
          
