@@ -10,7 +10,7 @@ ll buildSPG(ll x){
     while(x-cont > cont){
         ///guardar el xor de los estados 
         ///si un estado crea varios guardar la xor-suma de estos
-        s[comp(x-cont)^comp(cont)] = 1;
+        s[buildSPG(x-cont)^buildSPG(cont)] = 1;
         ///encontrar el mex
         while(s[tmp])tmp++;
         cont++;
