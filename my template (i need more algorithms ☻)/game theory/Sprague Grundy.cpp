@@ -1,4 +1,10 @@
 ll spg[10005];
+///inicializar en 0 los estados sin movimientos
+
+void iniSPG(ll n){
+    fr(i,1,n)spg[i] = -1;
+    spg[1] = 0;
+}
 
 ll buildSPG(ll x){
     if(spg[x] != -1)return spg[x];
