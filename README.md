@@ -92,5 +92,9 @@ Codes for ICPC
    Game Theory
       
       -Sprague Grundy Number
+      
+   Algebra
+   
+      -FFT
    
    
