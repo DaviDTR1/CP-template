@@ -1,6 +1,6 @@
 struct S_T{
     ///for sum
-        void lazy(ll lv,ll l,ll r,ll x){
+        void propagate(ll lv,ll l,ll r,ll x){
             if(l!=r){
                 lazy[lv<<1] = x;
                 lazy[(lv<<1)+1] = x;
