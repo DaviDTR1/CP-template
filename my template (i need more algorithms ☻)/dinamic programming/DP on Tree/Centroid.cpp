@@ -27,7 +27,7 @@ ll find_c(ll u,ll p,ll tam){
 ///Create centriod tree
 void centroid_d(ll x, ll p){
     ll tam = sub[x];
-    ll cent = find_c(x,x,tam);
+    ll cent = find_c(x,x,tam>>1);
     mark[cent] = 1;
     parent[cent] = p;
     gc[p].pb(cent);
