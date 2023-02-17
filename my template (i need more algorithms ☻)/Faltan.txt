@@ -1,6 +1,5 @@
 String
 	Z_AND_PREFIX_FUNCTION
-	Aho Corasik
 
 Geometry
 	Convex Hull
@@ -14,5 +13,8 @@ DP Optimization
 
 Graph
 	Tarjan
+	
+Fundamental
+	DSU Rollback
 
 
