@@ -13,7 +13,12 @@ par updates[200005];
 ///sort query
 bool cmp(trio &a,trio &b){
     if(a.l/leng!=b.l/leng)return a.l<b.l;
-    if(a.r/leng!=b.r/leng)return a.r<b.r;
+    if(a.r/leng!=b.r/leng){
+	if((a.l/leng)%2)
+	    return a.r<b.r;
+	else
+	    return a.r>b.r;
+    }
     return a.time < b.time;
 }
 
