@@ -1,97 +1,113 @@
-ll n,t,ct;
-vi g[2205];
+using T = long long;
+const T inf = 1LL << 61;
+const int N = 510;
 
-struct Flow_Edge{
-    ll v,u;
-    ll cap,cost,rev,flow=0;
-    Flow_Edge(ll v,ll u,ll cap,ll cost, ll rev):v(v), u(u), cap(cap), cost(cost), rev(rev){}
+struct Min_Cost_Max_Flow {
+  struct edge {
+    int u, v;
+    T cap, cost;
+    int id;
+    edge(int _u, int _v, T _cap, T _cost, int _id) {
+      u = _u;
+      v = _v;
+      cap = _cap;
+      cost = _cost;
+      id = _id;
+    }
+  };
+  int n, s, t, mxid;
+  T flow, cost;
+  vector<vector<int>> g;
+  vector<edge> e;
+  vector<T> d, potential, flow_through;
+  vector<int> par;
+  bool neg;
+  Min_Cost_Max_Flow() {}
+  Min_Cost_Max_Flow(int _n) { // 0-based indexing
+    n = _n + 10;
+    g.assign(n, vector<int> ());
+    neg = false;
+    mxid = 0;
+  }
+  void add_edge(int u, int v, T cap, T cost, int id = -1, bool directed = true) {
+    if(cost < 0) neg = true;
+    g[u].push_back(e.size());
+    e.push_back(edge(u, v, cap, cost, id));
+    g[v].push_back(e.size());
+    e.push_back(edge(v, u, 0, -cost, -1));
+    mxid = max(mxid, id);
+    if(!directed) add_edge(v, u, cap, cost, id + N, true); // tracks the reverse edges for undirected graphs
+  }
+  bool dijkstra() {
+    par.assign(n, -1);
+    d.assign(n, inf);
+    priority_queue<pair<T, T>, vector<pair<T, T>>, greater<pair<T, T>> > q;
+    d[s] = 0;
+    q.push(pair<T, T>(0, s));
+    while (!q.empty()) {
+      int u = q.top().second;
+      T nw = q.top().first;
+      q.pop();
+      if(nw != d[u]) continue;
+      for (int i = 0; i < (int)g[u].size(); i++) {
+        int id = g[u][i];
+        int v = e[id].v;
+        T cap = e[id].cap;
+        T w = e[id].cost + potential[u] - potential[v];
+        if (d[u] + w < d[v] && cap > 0) {
+          d[v] = d[u] + w;
+          par[v] = id;
+          q.push(pair<T, T>(d[v], v));
+        }
+      }
+    }
+    for (int i = 0; i < n; i++) { // update potential
+      if(d[i] < inf) potential[i] += d[i];
+    }
+    return d[t] != inf;
+  }
+  T send_flow(int v, T cur) {
+    if(par[v] == -1) return cur;
+    int id = par[v];
+    int u = e[id].u;
+    T w = e[id].cost;
+    T f = send_flow(u, min(cur, e[id].cap));
+    cost += f * w;
+    e[id].cap -= f;
+    e[id ^ 1].cap += f;
+    return f;
+  }
+  //returns {maxflow, mincost}
+  pair<T, T> solve(int _s, int _t, T goal = inf) {
+    s = _s;
+    t = _t;
+    flow = 0, cost = 0;
+    potential.assign(n, 0);
+    if (neg) {
+      // run Bellman-Ford to find starting potential
+      d.assign(n, inf);
+      for (int i = 0, relax = true; i < n && relax; i++) {
+        for (int u = 0; u < n; u++) {
+          for (int k = 0; k < (int)g[u].size(); k++) {
+            int id = g[u][k];
+            int v = e[id].v;
+            T cap = e[id].cap, w = e[id].cost;
+            if (d[v] > d[u] + w && cap > 0) {
+              d[v] = d[u] + w;
+              relax = true;
+            }
+          }
+        }
+      }
+      for(int i = 0; i < n; i++) if(d[i] < inf) potential[i] = d[i];
+    }
+    while (flow < goal && dijkstra()) flow += send_flow(t, goal - flow);
+    flow_through.assign(mxid + 10, 0);
+    for (int u = 0; u < n; u++) {
+      for (auto v : g[u]) {
+        if (e[v].id >= 0) flow_through[e[v].id] = e[v ^ 1].cap;
+      }
+    }
+    return make_pair(flow, cost);
+  }
 };
-vector<Flow_Edge>edges;
-
-///create the edges
-void add(ll v, ll u,ll cap, ll val){
-    edges.emplace_back(v,u,cap,val,ct+1);
-    edges.emplace_back(u,v,0,-val,ct);
-    g[v].pb(ct);
-    g[u].pb(ct+1);
-    ct+=2;
-}
-
-///for graph without negative cylces
-bool dijkstra(ll ini,ll fin,vi &path,vi &d){
-    fill(d.begin(), d.end(),INF);
-    fill(path.begin(), path.end(),-1);
-    d[ini] = 0;
-    priority_queue<par, vector<par>,greater<par> >qp;
-    qp.push({0,ini});
-    while(!qp.empty()){
-        par v = qp.top();
-        qp.pop();
-        if(v.second==fin)return 1;
-        rep(c, g[v.second]){
-            ll val = v.first + edges[c].cost;
-            ll u = edges[c].u;
-            if(val < d[u] && edges[c].flow < edges[c].cap){
-                path[u] = c;
-                d[u] = val;
-                qp.push({d[u],u});
-            }
-        }
-    }
-    return 0;
-}
-
-///All graph
-void spfa(ll ini,ll fin, vi &path, vi &d){
-    fill(d.begin(), d.end(),INF);
-    fill(path.begin(), path.end(),-1);
-    d[ini] = 0;
-    vector<bool>inq(fin+1,0);
-    queue<ll> qp;
-    qp.push({ini});
-
-    while(!qp.empty()){
-        ll u = qp.front();
-        qp.pop();
-        inq[u] = 0;
-        rep(c, g[u]){
-            ll v = edges[c].u;
-            if(edges[c].cap > edges[c].flow && d[v]>d[u] + edges[c].cost){
-                d[v] = d[u] + edges[c].cost;
-                path[v] = c;
-                if(!inq[v]){
-                    inq[v] = 1;
-                    qp.push(v);
-                }
-            }
-        }
-    }
-}
-
-ll max_flow(ll ini, ll fin, ll K){
-    ll flow = 0;
-    ll cts = 0;
-    vi path(fin+1);
-    vi d(fin+1);
-    while(flow < K){
-        dijkstra(ini,fin,path,d);
-        if(d[fin]==INF)break;
-        ll new_flow = K-flow;
-        ll u = fin;
-        while(u!=ini){
-            ll tmp = path[u];
-            new_flow = min(new_flow,edges[tmp].cap-edges[tmp].flow);
-            u = edges[tmp].v;
-        }
-        flow += new_flow;
-        cts += new_flow*d[fin];
-        u = fin;
-        while(u!=ini){
-            ll tmp = path[u];
-            edges[tmp].flow += new_flow;
-            edges[edges[tmp].rev].flow -= new_flow;
-            u = edges[tmp].v;
-        }
-    }
-    return cts;
-}
