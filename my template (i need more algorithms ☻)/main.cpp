@@ -20,6 +20,8 @@ typedef tree<int,null_type, less<int>,rb_tree_tag,
 #define rep(i,c) for(auto (i) : (c))
 #define mini(a,b) (((a) < (b)) ? (a) : (b))
 #define maxi(a,b) (((a) > (b)) ? (a) : (b))
+#define all(v) v.begin(),v.end()
+#define sz(v) (int)v.size()
 #define par pair<int,int>
 #define vp vector<par>
 #define vi vector<int>

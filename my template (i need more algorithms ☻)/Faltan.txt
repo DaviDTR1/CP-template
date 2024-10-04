@@ -12,7 +12,7 @@ DP Optimization
 	Convex Hull trick
 
 Graph
-	Tarjan
+
 	
 Fundamental
 	DSU Rollback
