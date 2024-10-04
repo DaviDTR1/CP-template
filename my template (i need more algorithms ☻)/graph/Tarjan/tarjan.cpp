@@ -27,3 +27,4 @@ dfs_low[u] = min(dfs_low[u], dfs_num[v]); // then can update
     dfsNumberCounter = 0;
     dfsRoot = 1; rootChildren = 0;
     articulationPointAndBridge(1);
+    articulation_vertex[dfsRoot] = (rootChildren>1);
