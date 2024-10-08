@@ -3,6 +3,8 @@ struct vertex{
     ll next[K];
     ll suffix = 0;
     bool leaf = 0;
+    // position of the neares leaf vertex following suffix link
+    ll near_leaf = 0;
     vertex(){
         fill(begin(next), end(next),-1);
     }
