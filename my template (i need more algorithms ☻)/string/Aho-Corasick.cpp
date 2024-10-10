@@ -3,6 +3,8 @@ struct vertex{
     ll next[K];
     ll suffix = 0;
     bool leaf = 0;
+    // position of the neares leaf vertex following suffix link
+    ll near_leaf = 0;
     vertex(){
         fill(begin(next), end(next),-1);
     }
@@ -56,6 +58,28 @@ void buildAHO(){
 
     }
 }
+///count the number of ways to create the string a[0:pos] with a set of words
+void count_of_match(string &a){
+    ll v = 0;
+    ll pos = 0;
+    rep(u, a){
+        pos++;
+        ll c = u-'a';
+        v = trie[v].next[c];
+        
+        if(trie[v].leaf){
+            dp[pos] += dp[pos- words[trie[v].leaf].size()];
+            dp[pos]%=mod;
+        }
+        ll x = trie[v].near_leaf;
+        while(x!=0){
+            dp[pos] += dp[pos - words[trie[x].leaf].size()];
+            dp[pos]%=mod;
+            x = trie[x].near_leaf;
+        }
+    }
+}
+
 ///move through the text and count the number of times I land on each position
 void move(string &a){
     ll v = 0;

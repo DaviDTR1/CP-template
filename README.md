@@ -67,6 +67,7 @@ Codes for ICPC
          Connected Component
         
             -Kosajaru
+            -Tarjan
    
          Shortest Paths
          
