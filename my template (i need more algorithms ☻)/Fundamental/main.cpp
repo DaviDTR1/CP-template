@@ -35,7 +35,7 @@ typedef tree<int,null_type, less<int>,rb_tree_tag,
 
 const int mod = 1e9+7;
 const int INF = 1e18;
-const dd eps=1e-9;s
+const dd eps=1e-9;
 int n,t;
 
 signed main() {
